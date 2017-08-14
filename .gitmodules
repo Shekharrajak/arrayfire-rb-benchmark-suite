@@ -1,0 +1,6 @@
+[submodule "ext/arrayfire-rb"]
+	path = ext/arrayfire-rb
+	url = git://github.com/prasunanand/arrayfire-rb.git
+[submodule "ext/nmatrix"]
+	path = ext/nmatrix
+	url = git://github.com/sciruby/nmatrix.git
