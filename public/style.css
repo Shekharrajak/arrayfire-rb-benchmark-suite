@@ -1,0 +1,14 @@
+.navbar{
+  color: #fff;
+  background: #000;
+  width: 100%;
+  padding: 20px;
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.chart{
+  float: left;
+}
