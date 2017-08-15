@@ -3,7 +3,7 @@ var nmatrix_ruby, nmatrix_lapacke, nmatrix_jruby, arrayfire, arrayfire_lapacke;
 app.controller('MainCtrl', function($scope, $http) {
 
   NmatrixUrl = "nmatrix-ruby.json"
-  // NMatrixJRubyUrl = "nmatrix-jruby.json"
+  NMatrixJRubyUrl = "nmatrix-jruby.json"
   NMatrixLapackeRubyUrl = "nmatrix-lapacke.json"
   ArrayFireUrl = "arrayfire.json"
   ArrayFireLapackeUrl = "arrayfire-lapacke.json"
@@ -17,127 +17,72 @@ app.controller('MainCtrl', function($scope, $http) {
     console.log(data['subtraction']);
     $http.get(NMatrixLapackeRubyUrl).success(function(data) {
       nmatrix_lapacke = data;
-      $http.get(ArrayFireUrl).success(function(data) {
-        arrayfire = data;
-        $http.get(ArrayFireLapackeUrl).success(function(data) {
-          arrayfire_lapacke = data;
+      $http.get(NMatrixJRubyUrl).success(function(data) {
+        nmatrix_jruby = data;
+        $http.get(ArrayFireUrl).success(function(data) {
+          arrayfire = data;
+          $http.get(ArrayFireLapackeUrl).success(function(data) {
+            arrayfire_lapacke = data;
 
-          console.log($scope.arith);
+            console.log($scope.arith);
 
-          $scope.arith = ["addition", "subtraction"];
+            $scope.arith = ["addition", "subtraction"];
 
-          for (var i=0, l=  $scope.arith.length; i<l; i++){
-            // console.log(key)
-            key = $scope.arith[i];
-            console.log(nmatrix_ruby);
-            $(function () {
-              $('#chart'+key).highcharts({
-                  type: 'line',
-                  title: {
-                    text: 'Matrix '+key,
-                    x: -20 //center
-                  },
-                  subtitle: {x: -20},
-                  xAxis: {
+            for (var i=0, l=  $scope.arith.length; i<l; i++){
+              // console.log(key)
+              key = $scope.arith[i];
+              console.log(nmatrix_ruby);
+              $(function () {
+                $('#chart'+key).highcharts({
+                    type: 'line',
                     title: {
-                      text: 'Number of elements in one Matrix'
+                      text: 'Matrix '+key,
+                      x: -20 //center
                     },
-                  },
-                  yAxis: {
-                    title: {
-                        text: 'Time (s)'
+                    subtitle: {x: -20},
+                    xAxis: {
+                      title: {
+                        text: 'Number of elements in one Matrix'
+                      },
                     },
-                    type: 'logarithmic',
-                    plotLines: [{
-                        value: 0,
-                        width: 1,
-                        color: '#808080'
-                    }]
-                  },
-                  tooltip: {
-                    valueSuffix: 's'
-                  },
-                  legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'middle',
-                    borderWidth: 0
-                  },
-                  series: [{
-                    name: "NMatrix-Ruby",
-                    data: nmatrix_ruby[key]
-                  },{
-                  //   name: "jruby",
-                  //   data: nmatrix_jruby[key]
-                  // },{
-                    name: "ArrayFire",
-                    data: arrayfire[key]
-                  },
-                ]
+                    yAxis: {
+                      title: {
+                          text: 'Time (s)'
+                      },
+                      type: 'logarithmic',
+                      plotLines: [{
+                          value: 0,
+                          width: 1,
+                          color: '#808080'
+                      }]
+                    },
+                    tooltip: {
+                      valueSuffix: 's'
+                    },
+                    legend: {
+                      layout: 'vertical',
+                      align: 'right',
+                      verticalAlign: 'middle',
+                      borderWidth: 0
+                    },
+                    series: [{
+                      name: "NMatrix-Ruby",
+                      data: nmatrix_ruby[key]
+                    },{
+                      name: "NMatrix-JRuby",
+                      data: nmatrix_jruby[key]
+                    },{
+                      name: "ArrayFire",
+                      data: arrayfire[key]
+                    },
+                  ]
+                });
               });
-            });
-          }
+            }
 
 
-          $(function () {
-            $('#chartmat_mult').highcharts({
-                type: 'line',
-                title: {
-                  text: 'Matrix '+key,
-                  x: -20 //center
-                },
-                subtitle: {x: -20},
-                xAxis: {
-                  title: {
-                    text: 'Number of elements in one Matrix'
-                  },
-                },
-                yAxis: {
-                  title: {
-                      text: 'Time (s)'
-                  },
-                  type: 'logarithmic',
-                  plotLines: [{
-                      value: 0,
-                      width: 1,
-                      color: '#808080'
-                  }]
-                },
-                tooltip: {
-                  valueSuffix: 's'
-                },
-                legend: {
-                  layout: 'vertical',
-                  align: 'right',
-                  verticalAlign: 'middle',
-                  borderWidth: 0
-                },
-                series: [{
-                  name: "NMatrix-LAPACK<br>-Ruby",
-                  data: nmatrix_lapacke["mat_mult"]
-                },{
-                  name: "NMatrix-Ruby",
-                  data: nmatrix_ruby["mat_mult"]
-                },{
-                //   name: "jruby",
-                //   data: nmatrix_jruby[key]
-                // },{
-                  name: "ArrayFire",
-                  data: arrayfire["mat_mult"]
-                },
-              ]
-            });
-          });
-
-
-          $scope.lapack = ["determinant", "lu_factorization"];
-
-          for (var i=0, l=  $scope.lapack.length; i<l; i++){
-            // console.log(key)
-            key = $scope.lapack[i];
-            console.log(nmatrix_ruby);
             $(function () {
-              $('#chart'+key).highcharts({
+              $('#chartmat_mult').highcharts({
                   type: 'line',
                   title: {
                     text: 'Matrix '+key,
@@ -171,31 +116,79 @@ app.controller('MainCtrl', function($scope, $http) {
                   },
                   series: [{
                     name: "NMatrix-LAPACK<br>-Ruby",
-                    data: nmatrix_lapacke[key]
+                    data: nmatrix_lapacke["mat_mult"]
                   },{
-                  //   name: "jruby",
-                  //   data: nmatrix_jruby[key]
-                  // },{
+                    name: "NMatrix-Ruby",
+                    data: nmatrix_ruby["mat_mult"]
+                  },{
+                    name: "NMatrix-JRuby",
+                    data: nmatrix_jruby["mat_mult"]
+                  },{
                     name: "ArrayFire",
-                    data: arrayfire_lapacke[key]
+                    data: arrayfire["mat_mult"]
                   },
                 ]
               });
             });
-          }
 
+
+            $scope.lapack = ["determinant", "lu_factorization"];
+
+            for (var i=0, l=  $scope.lapack.length; i<l; i++){
+              // console.log(key)
+              key = $scope.lapack[i];
+              console.log(nmatrix_ruby);
+              $(function () {
+                $('#chart'+key).highcharts({
+                    type: 'line',
+                    title: {
+                      text: 'Matrix '+key,
+                      x: -20 //center
+                    },
+                    subtitle: {x: -20},
+                    xAxis: {
+                      title: {
+                        text: 'Number of elements in one Matrix'
+                      },
+                    },
+                    yAxis: {
+                      title: {
+                          text: 'Time (s)'
+                      },
+                      type: 'logarithmic',
+                      plotLines: [{
+                          value: 0,
+                          width: 1,
+                          color: '#808080'
+                      }]
+                    },
+                    tooltip: {
+                      valueSuffix: 's'
+                    },
+                    legend: {
+                      layout: 'vertical',
+                      align: 'right',
+                      verticalAlign: 'middle',
+                      borderWidth: 0
+                    },
+                    series: [{
+                      name: "NMatrix-LAPACK<br>-Ruby",
+                      data: nmatrix_lapacke[key]
+                    },{
+                      name: "NMatrix-JRuby",
+                      data: nmatrix_jruby[key]
+                    },{
+                      name: "ArrayFire",
+                      data: arrayfire_lapacke[key]
+                    },
+                  ]
+                });
+              });
+            }
+
+          });
         });
       });
     });
   });
-  // $http.get(NMatrixJRubyUrl).success(function(data) {
-  //   nmatrix_lapacke = data;
-  // });
-
-
-
-
-
-
 })
-
