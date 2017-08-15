@@ -1,4 +1,4 @@
-require_relative '../ext/nmatrix/lib/nmatrix'
+require_relative '../ext/nmatrix/lib/nmatrix/nmatrix.rb'
 
 require 'benchmark'
 require 'json'
