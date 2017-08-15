@@ -14,15 +14,20 @@
 <body ng-app="resultApp">
   <div class="navbar">Welcome to Benchmark Dashboard!</div>
     <div class = "container" ng-controller="MainCtrl">
-    {{ charts.features }}
-      <div ng-repeat = "(key, value) in charts.features" id= "charts{{key}}">
-        <h1>{{ key }}</h1>
-
+      <div class="block">
+        <h2>Arithmetic Operations</h2>
+          <div id ="chartaddition" class="chart"></div>
+          <div id ="chartsubtraction" class="chart"></div>
       </div>
-      <div id ="chartaddition" class="chart"></div>
-      <div id ="chartsubtraction" class="chart"></div>
-      <div id ="chartmultiplication" class="chart"></div>
-      <div id ="chartdeterminant" class="chart"></div>
+      <div class="block">
+        <h2>BLAS Operations</h2>
+        <div id ="chartmat_mult" class="chart"></div>
+      </div>
+      <div class="block">
+        <h2>LAPACK Operations</h2>
+          <div id ="chartdeterminant" class="chart"></div><br>
+          <div id ="chartlu_factorization" class="chart"></div><br>
+      </div>
     </div>
   <script type="text/javascript" src="./script.js"></script>
 </body>

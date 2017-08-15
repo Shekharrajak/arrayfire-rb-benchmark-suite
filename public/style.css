@@ -12,3 +12,13 @@
 .chart{
   float: left;
 }
+
+.block{
+  width: 70%;
+  margin: auto;
+  height: 500px;
+}
+
+.block h2{
+  text-align: center;
+}
