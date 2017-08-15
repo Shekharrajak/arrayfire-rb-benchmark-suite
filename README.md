@@ -1,21 +1,25 @@
 # arrayfire-rb-benchmark-suite
 
-Benchmark arrayfire on local machine
+Benchmark arrayfire on local machine :
 
-Install repos
-```
+The current benchmarks correspond to:
+* CUDA backend
+* Double floating point numbers
+
+# Install repos
+```bash
 git submodule init
 git submodule update
 ```
 
-Invoke rvm
-```
+# Invoke rvm
+```bash
 source ~/.rvm/scripts/rvm
 ```
 
-Build libraries and benchmark.
+# Build libraries and benchmark.
 
-```
+```bash
 rvm use ruby
 cd ext/nmatrix/
 rake compile
@@ -46,9 +50,9 @@ cd ../../
 ruby bin/nmatrix-jruby.rb > public/nmatrix-jruby.json
 ```
 
-Run server
+# Run server
 
-```
+```bash
 rvm use ruby
 ruby bin/server.rb
 ```
