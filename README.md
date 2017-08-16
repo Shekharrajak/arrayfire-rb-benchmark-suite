@@ -1,6 +1,6 @@
 # arrayfire-rb-benchmark-suite
 
-Benchmark arrayfire on local machine :
+Benchmark arrayfire on local machine.
 
 The current benchmarks correspond to:
 * CUDA backend

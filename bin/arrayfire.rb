@@ -8,7 +8,7 @@ class ResultCollect
 
   def self.generate
 
-    iters = 0
+    iters = 1
     result = {}
 
     result[:addition] = []
@@ -27,14 +27,32 @@ class ResultCollect
       af1 = ArrayFire::Af_Array.new(2, shape, elements1)
       af2 = ArrayFire::Af_Array.new(2, shape, elements2)
 
-      iters.times {af1 + af2}
-      result[:addition] << [ shape[0]*shape[1], Benchmark.measure{af1 + af2}.to_s.tr('()', '').split(" ")[3].to_f ]
+      iters.times {
+        x = af1 + af2
+        x.eval
+      }
+      result[:addition] << [ shape[0]*shape[1], Benchmark.measure{
+        x = af1 + af2
+        x.eval
+      }.to_s.tr('()', '').split(" ")[3].to_f ]
 
-      iters.times {af1 - af2}
-      result[:subtraction] << [ shape[0]*shape[1], Benchmark.measure{af1 - af2}.to_s.tr('()', '').split(" ")[3].to_f ]
+      iters.times {
+        y = af1 - af2
+        y.eval
+      }
+      result[:subtraction] << [ shape[0]*shape[1], Benchmark.measure{
+        y = af1 - af2
+        y.eval
+      }.to_s.tr('()', '').split(" ")[3].to_f ]
 
-      iters.times {ArrayFire::BLAS.matmul(af1,af2, :AF_MAT_NONE, :AF_MAT_NONE)}
-      result[:mat_mult] << [ shape[0]*shape[1], Benchmark.measure{ArrayFire::BLAS.matmul(af1,af2, :AF_MAT_NONE, :AF_MAT_NONE)}.to_s.tr('()', '').split(" ")[3].to_f ]
+      iters.times {
+        z = ArrayFire::BLAS.matmul(af1,af2, :AF_MAT_NONE, :AF_MAT_NONE)
+        z.eval
+      }
+      result[:mat_mult] << [ shape[0]*shape[1], Benchmark.measure{
+        z = ArrayFire::BLAS.matmul(af1,af2, :AF_MAT_NONE, :AF_MAT_NONE)
+        z.eval
+      }.to_s.tr('()', '').split(" ")[3].to_f ]
 
       puts result.to_json
 
