@@ -24,8 +24,8 @@ class ResultCollect
     shapeArray.each do |shape|
       elements1 = Array.new(shape[0]*shape[1]) { rand(1...999999) }
       elements2 = Array.new(shape[0]*shape[1]) { rand(1...999999) }
-      nmatrix1 = NMatrix.new(shape, elements1, dtype: :float32)
-      nmatrix2 = NMatrix.new(shape, elements2, dtype: :float32)
+      nmatrix1 = NMatrix.new(shape, elements1, dtype: :float64)
+      nmatrix2 = NMatrix.new(shape, elements2, dtype: :float64)
 
       iters.times {nmatrix1 + nmatrix2}
       result[:addition] << [ shape[0]*shape[1], Benchmark.measure{nmatrix1 + nmatrix2}.to_s.tr('()', '').split(" ")[3].to_f ]
